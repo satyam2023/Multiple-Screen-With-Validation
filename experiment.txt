@@ -1,0 +1,781 @@
+import React, { useRef, useState, useEffect } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import CustomerDetails from './CustomerDetails';
+import CustomHeader from './CustomHeader';
+import CustomFooter from './CustomFooter';
+import First from './First';
+import Second from './Second'
+import Appopening from './AppOpening';
+
+
+
+
+//import RepresentativeDetails from './RepresentativeDetails';
+
+const App: React.FC = () => {
+  const [currentScreen, setCurrentScreen] = useState(0);
+  const [one,setone]=useState<boolean>(false);
+
+  //var one = false;
+  function setScreen(num: number) {
+    setCurrentScreen(num);
+  }
+
+
+
+  function CheckScreen(check: boolean) {
+   // console.log("boolean inside APP:", check)
+   // console.log("boolean inside APP one:", one)
+    setone(check)
+
+   // console.log("boolean inside APP after state update:", one);
+
+  }
+
+  const customerDetailsRef = useRef<any>();
+  const FirstRef = useRef<any>();
+  const SecondRef = useRef<any>();
+
+
+  function callCustomerDetailsSubmit() {
+  
+    if (customerDetailsRef.current && currentScreen == 1) {
+
+      customerDetailsRef.current.handleSubmit();
+    }
+  }
+
+  function callFirstSubmit() {
+    
+    if (FirstRef.current && currentScreen == 2) {
+      // console.log("FirstInside")
+      FirstRef.current.handleSubmit();
+    }
+  }
+
+  function callSecondSubmit() {
+    // console.log("SecondComponet")
+    if (SecondRef.current && currentScreen == 3) {
+      // console.log("SecondComponetinner")
+      SecondRef.current.handleSubmit();
+    }
+  }
+
+
+
+
+  // console.log("customerDetailsRef.current:",customerDetailsRef.current)
+
+  function fortiming(time: number) {
+    setTimeout(() => {
+      setCurrentScreen(1);
+    }, time);
+  }
+
+
+  return (
+    <View style={styles.container}>
+      {currentScreen == 0 && <Appopening fortiming={fortiming} />}
+      <View style={styles.container}>
+
+        <CustomHeader currentScreen={currentScreen} />
+        <ScrollView>
+
+          {currentScreen == 1 && <CustomerDetails CheckScreen={CheckScreen}
+            ref={customerDetailsRef} />}
+          {currentScreen == 2 && <First CheckScreen={CheckScreen}
+            ref={FirstRef} />}
+          {currentScreen == 3 && <Second CheckScreen={CheckScreen}
+            ref={SecondRef} />}
+        </ScrollView>
+        <CustomFooter setScreen={setScreen} currentScreen={currentScreen} callCustomerDetailsSubmit={callCustomerDetailsSubmit} one={one} CheckScreen={CheckScreen}
+          callFirstSubmit={callFirstSubmit} callSecondSubmit={callSecondSubmit} />
+      </View>
+    </View>
+
+  );
+}
+
+export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+   
+  },
+});
+-------------------------------------------------------------
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import type { PropsWithChildren } from 'react';
+
+
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import InputText from './InputText';
+import { Modal } from 'react-native';
+
+
+//import DropdownList from './DropDownList';
+interface CustomerProps {
+  CheckScreen: any;
+}
+
+const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
+  const [validname, setvalidname] = useState<boolean>(true);
+  const [toggle,settoggle]=useState<boolean>(false)
+  const [Tag,setTag]=useState<any>("Search By");
+  const details = {
+    fullname: useRef(''),
+  };
+
+  function errorVisibleName() {
+   // console.log("valid name:",validname);
+    if (!validname ) {
+      return (
+        <View style={styles.outer}>
+          <Text style={styles.errormsg}>!!! Invalid name</Text>
+        </View>
+      );
+    }
+  }
+
+ function handleName(text:string) {
+    
+    //console.log('handle name function called()');
+    //let fullNameLength = details.fullname.current.length;
+    let fullNameLength=text.length;
+    if (fullNameLength === 0) {
+       setvalidname(false);
+       CheckScreen(false);
+    } else {
+      //let valid = true;
+      for (let i = 0; i < fullNameLength; i++) {
+       // console.log("type of:",typeof(text[i]))
+        if (
+          text[i] == '0' &&
+          text[i] <= '9'
+        ) {
+          //valid = false;
+          setvalidname(false);
+          CheckScreen(false);
+          break;
+        }
+      }
+      setvalidname(true);
+      CheckScreen(true);
+    }
+  }
+
+  function errorVisibleNaam(){
+    let fullNameLength = details.fullname.current.length;
+   // console.log("finding length:",fullNameLength);
+    if(fullNameLength===0){
+      errorVisibleName();
+      setvalidname(false);
+    }
+  }
+
+  
+  
+
+  useImperativeHandle(ref, () => ({
+    handleSubmit: errorVisibleNaam,
+  }));
+
+  //console.log("job type array:",dataJobtype);
+  function dropview(){
+  if(toggle){
+ return(
+<Modal 
+visible={toggle}
+animationType='slide'
+transparent={true}
+
+>
+  <View style={{flexDirection:'column',backgroundColor:'rgba(240,240,240,0.5)',borderTopColor:'#E6E6E6',width:'100%',height:'100%',}}>
+  <View>
+   <View>
+      <TouchableOpacity  style={styles.modalsearchbox} onPress={()=>{
+      if(toggle) {settoggle(false)}
+      else{settoggle(true)}
+      
+      }} >
+        <Text style={{padding:15,fontSize:14}}>{Tag}
+        </Text>
+        <Text style={{fontSize:25, marginLeft:200,marginTop:5,}} >+</Text>
+      </TouchableOpacity>
+     
+      </View>
+  <View style={{marginTop:0}}>
+<TouchableOpacity  onPress={()=>{
+  setTag("Hello")
+  settoggle(false)
+}}><Text style={styles.insidedropdown}>HELLO</Text></TouchableOpacity>
+<TouchableOpacity onPress={()=>{
+  setTag("Hello123")
+  settoggle(false)
+}}><Text  style={styles.insidedropdown}>HELLO123</Text></TouchableOpacity>
+<TouchableOpacity onPress={()=>{
+  setTag("Hello1234")
+  settoggle(false)
+}}><Text style={styles.insidedropdown}>HELLO1234</Text></TouchableOpacity>
+</View>
+</View>
+</View>
+</Modal>
+
+
+
+ );
+  }
+
+  }
+
+  console.log("toggle value:",toggle)
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.box}>
+        <View style={{ backgroundColor: '#E6E6E6', width: 0 }}></View>
+        <InputText
+          placeholder="Full name"
+          ChangeText={(text: string) => {
+            details.fullname.current = text;
+            handleName(text);
+            
+          }}
+          
+          keyboardType="default"
+          secureText={false}
+        />
+      </View>
+      {errorVisibleName()}
+      <View>
+      <TouchableOpacity  style={styles.searchbox} onPress={()=>{
+      if(toggle) {settoggle(false)}
+      else{settoggle(true)}
+      
+      }} >
+        <Text style={{padding:15,fontSize:14}}>{Tag}
+        </Text>
+        <Text style={{fontSize:25, marginLeft:200,marginTop:5,}} >+</Text>
+      </TouchableOpacity>
+     
+      </View>
+    { dropview()}
+    
+      
+    </SafeAreaView>
+  );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E6E6E6',
+    marginBottom: 110,
+    marginTop: 0,
+    
+  },
+  accountBtn: {
+    marginTop: 20,
+    fontSize: 20,
+    backgroundColor: '#0096FF',
+    color: '#FFFFFF',
+    padding: 8,
+    borderRadius: 5,
+    paddingHorizontal: 110,
+  },
+  errormsg: {
+    color: 'red',
+    marginRight: 170,
+  },
+  outer: {
+    //  marginRight:170,
+  },
+  icon: {
+    marginTop: 4,
+    marginLeft: 4,
+  },
+  box: {
+    flexDirection: 'row',
+    borderRadius: 15,
+    borderColor: '#91A3B0',
+    borderWidth: 2,
+    width: '90%',
+    margin: 15,
+    backgroundColor: '#FFFFFF',
+    
+  },
+  searchbox:{
+    flexDirection: 'row',
+    borderRadius: 15,
+    borderColor: '#91A3B0',
+    borderWidth: 2,
+    width: '90%',
+    margin: 15,
+    backgroundColor: '#FFFFFF',
+    justifyContent:'space-evenly'
+  },
+  modalsearchbox:{
+    flexDirection: 'row',
+    borderRadius: 15,
+    borderColor: '#91A3B0',
+    borderWidth: 2,
+    width: '93%',
+    margin: 15,
+    marginTop:161,
+    backgroundColor: '#FFFFFF',
+    justifyContent:'space-evenly'
+  },
+  boxy: {
+    flexDirection: 'row',
+    borderRadius: 5,
+    //borderColor: '#91A3B0',
+    borderTopColor: '#91A3B0',
+    borderLeftColor: '#91A3B0',
+    borderRightColor: '#FFFFFF',
+    borderBottomColor: '#FFFFFF',
+    borderWidth: 2,
+    width: '90%',
+    margin: 15,
+    backgroundColor: '#FFFFFF',
+  },
+  dropview:{
+    backgroundColor:'red',
+    width:'110%',
+    height:'50%'
+  },
+  insidedropdown:{
+    textAlign:'center',
+    fontSize:18,
+    backgroundColor:'#FFFFFF',
+    marginBottom:10,
+    borderWidth:1,
+    borderRadius:15,
+   
+  }
+});
+
+export default CustomerDetails;
+---------------------------------------------------------------
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import type { PropsWithChildren } from 'react';
+
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import InputText from './InputText';
+
+//import DropdownList from './DropDownList';
+interface FirstProps {
+  CheckScreen: any;
+}
+
+const First = forwardRef(({ CheckScreen }: FirstProps, ref) => {
+  const [validphone, setvalidphone] = useState(true);
+  const [validemail, setvalidemail] = useState(true);
+  const [emailstatus, setemailstatus] = useState(false);
+  const [phonestatus, setphonestatus] = useState(false);
+  const details = {
+    email: useRef(''),
+    phoneNumber: useRef(''),
+  };
+
+  if (emailstatus && phonestatus) {
+    CheckScreen(true);
+  } else {
+    CheckScreen(false);
+  }
+
+  function errorVisibleEmail() {
+    if (!validemail) {
+      return (
+        <View style={styles.outer}>
+          <Text style={styles.errormsg}>!!! Invalid email</Text>
+        </View>
+      );
+    }
+  }
+
+  function errorVisiblePhone() {
+    if (!validphone) {
+      return (
+        <View style={styles.outer}>
+          <Text style={styles.errormsg}>!!! Invalid Phone</Text>
+        </View>
+      );
+    }
+  }
+
+  function handleEmail(text: string) {
+    let mailIndex = text.indexOf('@');
+    let length = text.length;
+    if (length <= 0 || mailIndex === -1 || length - mailIndex < 3) {
+      setemailstatus(false);
+      setvalidemail(false);
+    } else {
+      setemailstatus(true);
+      setvalidemail(true);
+    }
+  }
+
+  function handlePhone(text: string) {
+    let phoneNumberLength = text.length;
+    if (phoneNumberLength <= 0 || phoneNumberLength > 10) {
+      setphonestatus(false);
+      setvalidphone(false);
+    } else if (phoneNumberLength === 10) {
+      setphonestatus(true);
+      setvalidphone(true);
+    }
+  }
+
+  function handleEmailAndPhone() {
+    console.log('handle the email');
+    let emailLength = details.email.current.length;
+    let phonelength = details.phoneNumber.current.length;
+    if (emailLength == 0) {
+      errorVisibleEmail();
+      setvalidemail(false);
+    }
+
+    if (phonelength == 0) {
+      setvalidphone(false);
+      errorVisiblePhone();
+    }
+  }
+
+  useImperativeHandle(ref, () => ({
+    handleSubmit: handleEmailAndPhone,
+  }));
+
+  //console.log("job type array:",dataJobtype);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.box}>
+        <View style={{ backgroundColor: '#E6E6E6', width: 0 }}></View>
+        <InputText
+          placeholder="Email Address"
+          ChangeText={(text: string) => {
+            details.email.current = text;
+            handleEmail(text);
+          }}
+          keyboardType="email-address"
+          secureText={false}
+        />
+      </View>
+
+      {errorVisibleEmail()}
+
+      <View style={styles.box}>
+        <View style={{ backgroundColor: '#E6E6E6', width: 0 }}></View>
+        <InputText
+          placeholder="Phone Number"
+          ChangeText={(text: string) => {
+            details.phoneNumber.current = text;
+            handlePhone(text);
+          }}
+          keyboardType="numeric"
+          secureText={false}
+        />
+      </View>
+      {errorVisiblePhone()}
+    </SafeAreaView>
+  );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E6E6E6',
+    marginBottom: 110,
+    marginTop: 0,
+  },
+  errormsg: {
+    color: 'red',
+    marginRight: 170,
+  },
+  outer: {
+    //  marginRight:170,
+  },
+  box: {
+    flexDirection: 'row',
+    borderRadius: 15,
+    borderColor: '#91A3B0',
+    borderWidth: 2,
+    width: '90%',
+    margin: 15,
+    backgroundColor: '#FFFFFF',
+  },
+});
+
+export default First;
+------------------------------------------------------
+import React, { useRef } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+interface HeaderProps{
+  currentScreen:any,
+}
+
+  
+const CustomHeader: React.FC<HeaderProps> = ({currentScreen}:HeaderProps) => {
+    console.log("current screen:",currentScreen)
+   
+  
+    return (
+      <View
+        style={styles.header}
+      >
+        <View style={styles.HeaderContainer}>
+          <View style={styles.firstCircle}>
+            <Text style={{ textAlign: 'center', fontSize: 30 }}>1</Text>
+          </View>
+  
+          <View style={(currentScreen==2 || currentScreen==3)?styles.firstline:styles.EmptyFirstLine}>
+            <Text></Text>
+          </View>
+  
+          <View style={ (currentScreen==2 || currentScreen==3)?styles.SecondCircle:styles.SecondCircleEmpty}>
+            <Text style={{ textAlign: 'center', fontSize: 30 }}>2</Text>
+          </View>
+  
+          <View style={(currentScreen==3)?styles.secondline:styles.EmptySecondLine}>
+            <Text></Text>
+          </View>
+  
+          <View style={(currentScreen==3)?styles.thirdCircle:styles.EmptyThirdCircle}>
+            <Text style={{ textAlign: 'center', fontSize: 30 }}>3</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const styles = StyleSheet.create({
+    
+    header: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      left: 0,
+      right: 0,
+      paddingTop: 25,
+      backgroundColor:'#FFFFFF'
+    },
+
+    HeaderContainer: {
+      backgroundColor: '#FFFFFF',
+      flexDirection: 'row',
+      height: 100,
+    },
+    firstCircle: {
+      marginLeft: 10,
+      marginTop: 10,
+      marginRight: 0,
+      marginBottom: 10,
+      height: 50,
+      width: 50,
+      backgroundColor: '#FFA500',
+      borderRadius: 50,
+      color: 'black',
+    },
+    SecondCircle: {
+      marginLeft: 0,
+      marginTop: 10,
+      marginBottom: 10,
+      height: 50,
+      width: 50,
+      backgroundColor: '#FFA500',
+      borderRadius: 50,
+    },
+    thirdCircle: {
+      marginLeft: 0,
+      marginTop: 10,
+      marginBottom: 10,
+      height: 50,
+      width: 50,
+      backgroundColor: '#FFA500',
+      borderRadius: 50,
+    },
+    firstline: {
+      backgroundColor: '#00FF00',
+      height: 5,
+      width: 70,
+      marginTop: 30,
+    },
+    secondline:{
+      backgroundColor: '#00FF00',
+      height: 5,
+      width: 70,
+      marginTop: 30,
+    },
+    SecondCircleEmpty:{
+      marginLeft: 0,
+      marginTop: 10,
+      marginBottom: 10,
+      height: 50,
+      width: 50,
+      backgroundColor: '#E6E6E6',
+      borderRadius: 50,
+    },
+    EmptyThirdCircle:{
+      marginLeft: 0,
+      marginTop: 10,
+      marginBottom: 10,
+      height: 50,
+      width: 50,
+      backgroundColor: '#E6E6E6',
+      borderRadius: 50,
+    },
+    EmptyFirstLine:{
+      backgroundColor: '#E6E6E6',
+      height: 5,
+      width: 70,
+      marginTop: 30,
+    },
+    EmptySecondLine:{
+      backgroundColor: '#E6E6E6',
+      height: 5,
+      width: 70,
+      marginTop: 30,
+    }
+  });
+
+  export default CustomHeader;
+  
+  ----------------------------------------------------------------------
+import React, { useRef } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+
+interface FooterProps {
+  setScreen: Function,
+  currentScreen: number,
+  callCustomerDetailsSubmit: Function,
+  one: boolean,
+  callFirstSubmit: Function;
+  CheckScreen: Function;
+  callSecondSubmit: Function
+}
+
+
+//const Footer_Height = 80;
+const CustomFooter: React.FC<FooterProps> = ({ setScreen, currentScreen, callCustomerDetailsSubmit, one, callFirstSubmit, CheckScreen, callSecondSubmit }: FooterProps) => {
+  function handle() {
+    //console.log("current screen in footer:", currentScreen);
+
+    callCustomerDetailsSubmit();
+    callFirstSubmit();
+    callSecondSubmit();
+   // console.log("Boolean inside footer:", one);
+    if (currentScreen == 1 && one) {
+     // console.log("customercomponent")
+      setScreen(2);
+      CheckScreen(false);
+    }
+    else if (currentScreen == 2 && one) {
+     // console.log("customerfirst")
+      setScreen(3);
+      CheckScreen(false);
+    }
+    else if (currentScreen == 3 && one) {
+      //console.log("customerSeond")
+      setScreen(1);
+      CheckScreen(false);
+    }
+
+
+
+
+
+
+  }
+
+  return (
+    <View
+      style={styles.footer}
+    >
+      <View style={styles.FooterContainer}>
+       
+        <TouchableOpacity style={styles.probtn} onPress={handle}>
+          <Text style={{ color: '#FFFFFF', fontSize: 20, }}>Proceed</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+export default CustomFooter;
+const styles = StyleSheet.create({
+  footer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  FooterContainer: {
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+
+  },
+  btn: {
+    margin: 10,
+    padding: 10,
+    borderWidth: 2,
+    borderColor: '#0000FF',
+    borderRadius: 15,
+  },
+  probtn: {
+   justifyContent:'center',
+    padding: 10,
+    borderWidth: 2,
+    borderColor: '#0000FF',
+    borderRadius: 15,
+    backgroundColor: '#0000FF',
+  },
+});
+--------------------------------------------------------------------
+
