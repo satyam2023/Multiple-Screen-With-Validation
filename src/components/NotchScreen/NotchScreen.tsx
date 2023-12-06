@@ -36,6 +36,8 @@ const NotchScreen = ({ currentScreen, notchcolor, setScreen, statusitem }: Notch
             style: 'destructive', },
         ]);
     }
+
+    
     return (
         <SafeAreaView style={{ backgroundColor: notchcolor, width: '100%', height: 60 }}>
             <StatusBar
@@ -45,7 +47,7 @@ const NotchScreen = ({ currentScreen, notchcolor, setScreen, statusitem }: Notch
                 translucent={false}
             />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ color: '#0039a6', fontSize: 40, marginLeft: '2%', fontWeight: 'bold' }}>{statusitem}</Text>
+                <Text style={{ color: '#0039a6', fontSize: 40, marginLeft: '2%',  }}>{statusitem}</Text>
                 {threebuttonhandler ? <TouchableOpacity onPress={() => {
                     ThreebuttonHandler()
                 }}>

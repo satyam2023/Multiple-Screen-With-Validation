@@ -19,8 +19,6 @@ type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen: React.FC<HomeScreenProps> = (props) => {
     const [splash,setsplash]=useState(true)
-    console.log("Props:",props);
-    console.log("Props of navigation:",props.navigation);
     function handleclick() {
 props.navigation.push("SignUp");
     }

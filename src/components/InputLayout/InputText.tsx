@@ -1,6 +1,7 @@
 import React, { FC, useRef, useState } from "react";
 import { TextInput, StyleSheet,Keyboard } from "react-native";
 import styles from "./Style";
+import { useIsFocused } from "@react-navigation/native";
 
 interface InputProps {
     placeholder: string;
@@ -10,6 +11,7 @@ interface InputProps {
     maxLength:number,
    setfocus:Function,
 }
+
 
 
 const InputText: FC<InputProps> = (props): JSX.Element => {

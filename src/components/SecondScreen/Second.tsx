@@ -65,7 +65,7 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
                     placeholder="Create Password"
                     ChangeText={(text: string) => {
                         details.password.current = text;
-                        handlePassword()
+                        
                     }}
                     keyboardType="default"
                     secureText={true}

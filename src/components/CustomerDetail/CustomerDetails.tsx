@@ -21,6 +21,7 @@ import {
 import InputText from '../InputLayout/InputText';
 import { Modal } from 'react-native';
 import RadioButton from '../RadioButton/RadioButton';
+import { Keyboard } from 'react-native';
 
 interface CustomerProps {
     CheckScreen: any;
@@ -114,6 +115,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
         handleSubmit: errorVisible,
     }));
 
+    
     //console.log("job type array:",dataJobtype);
     function dropview() {
         if (toggle) {
@@ -166,7 +168,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
 
     }
 
-    
+    console.log("keyboard Status:",Keyboard);
 
     return (
         <ScrollView>
