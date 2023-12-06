@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef,useState } from 'react';
 import {
     Text,
     View,
     StatusBar,
+    TouchableOpacity
 } from 'react-native';
 import styles from './Style';
 
@@ -10,6 +11,15 @@ interface AppopeningProps {
     fortiming: Function;
 }
 const Appopening: React.FC<AppopeningProps> = ({ fortiming }: AppopeningProps) => {
+    const[tag,settag]=useState(1)
+  function handle(){
+    console.log("inside first handle")
+    settag(tag+1);
+  }
+  function handleone(){
+    console.log("inside second handle")
+    settag(tag-1);
+  }
     return (
         <View style={{ width: '110%', height: '200%', backgroundColor: '#FFFFFF', }}>
             <StatusBar backgroundColor='#FFFFFF' />
@@ -21,6 +31,7 @@ const Appopening: React.FC<AppopeningProps> = ({ fortiming }: AppopeningProps) =
             <View style={styles.des4}></View>
             <View style={styles.des5}></View>
             <View style={styles.des6}></View>
+            
         </View>
     );
 }

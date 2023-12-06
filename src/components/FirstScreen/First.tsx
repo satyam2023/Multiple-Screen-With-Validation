@@ -26,6 +26,8 @@ const First = forwardRef(({ CheckScreen }: FirstProps, ref) => {
     const [validemail, setvalidemail] = useState(true);
     const [emailstatus, setemailstatus] = useState(false);
     const [phonestatus, setphonestatus] = useState(false);
+    const [focus, setfocus] = useState(false)
+    const [phonefocus, setphonefocus] = useState(false)
     const details = {
         email: useRef(''),
         phoneNumber: useRef(''),
@@ -103,14 +105,16 @@ const First = forwardRef(({ CheckScreen }: FirstProps, ref) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.box}>
+            <View style={!focus ? styles.box : styles.boxfocus}>
                 <View style={{ backgroundColor: '#E6E6E6', width: 0 }}></View>
                 <InputText
                     placeholder="Email Address"
                     ChangeText={(text: string) => {
                         details.email.current = text;
                         handleEmail(text);
+
                     }}
+                    setfocus={setfocus}
                     keyboardType="email-address"
                     secureText={false}
                     maxLength={40}
@@ -119,7 +123,7 @@ const First = forwardRef(({ CheckScreen }: FirstProps, ref) => {
 
             {errorVisibleEmail()}
 
-            <View style={styles.box}>
+            <View style={!phonefocus ? styles.box : styles.boxfocus}>
                 <View style={{ backgroundColor: '#E6E6E6', width: 0 }}></View>
                 <InputText
                     placeholder="Phone Number"
@@ -129,6 +133,7 @@ const First = forwardRef(({ CheckScreen }: FirstProps, ref) => {
                     }}
                     keyboardType="numeric"
                     secureText={false}
+                    setfocus={setphonefocus}
                     maxLength={10}
                 />
             </View>

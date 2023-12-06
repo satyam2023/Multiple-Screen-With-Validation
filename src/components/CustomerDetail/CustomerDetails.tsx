@@ -33,6 +33,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
     const [namestatus, setnamestatus] = useState<boolean>(false);
     const [dropstatus, setdropstatus] = useState<boolean>(false);
     const [dropvisi, setdropvisi] = useState<boolean>(false);
+    const [focus,setfocus]=useState(false)
     const details = {
         fullname: useRef(''),
     };
@@ -165,13 +166,13 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
 
     }
 
-    console.log("toggle value:", toggle)
+    
 
     return (
         <ScrollView>
             <SafeAreaView style={styles.container}>
 
-                <View style={styles.box}>
+                <View style={!focus?styles.box:styles.boxfocus}>
                     <View style={{ backgroundColor: '#E6E6E6', width: 0, }}></View>
                     <InputText
                         placeholder="Full name"
@@ -181,7 +182,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
 
                         }}
                         maxLength={30}
-
+                        setfocus={setfocus}
                         keyboardType="default"
                         secureText={false}
                     />
@@ -200,7 +201,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
                     }} >
                         <Text style={{ paddingTop: 10, paddingVertical: 10, fontSize: 18, color: 'black' }} >{Tag}
                         </Text>
-                        <Text style={{ fontSize: 25, marginLeft: 200, marginTop: 5, }} >+</Text>
+                        <Text style={{ fontSize: 25, marginLeft: 200, marginTop: 5, }} >{"+"}</Text>
                     </TouchableOpacity>
 
                 </View>

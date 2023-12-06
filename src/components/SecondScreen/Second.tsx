@@ -20,6 +20,8 @@ interface SecondProps {
 
 const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
     const [validpassword, setvalidpassword] = useState(true);
+    const [focus,setfocus]=useState(false)
+    const [passwordfocus,setpasswordfocus]=useState(false)
     const details = {
         password: useRef(""),
         confirmpassword: useRef(""),
@@ -57,7 +59,7 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
     }));
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.box}>
+            <View style={!focus?styles.box:styles.boxfocus}>
                 <View style={{ backgroundColor: '#E6E6E6', width: 0, }}></View>
                 <InputText
                     placeholder="Create Password"
@@ -68,10 +70,11 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
                     keyboardType="default"
                     secureText={true}
                     maxLength={30}
+                    setfocus={setfocus}
                 />
             </View>
             {errorVisiblePassword()}
-            <View style={styles.box}>
+            <View style={!passwordfocus?styles.box:styles.boxfocus}>
                 <View style={{ backgroundColor: '#E6E6E6', width: 0, }}></View>
                 <InputText
                     placeholder="Repeat Password"
@@ -82,6 +85,7 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
                     keyboardType="default"
                     secureText={true}
                     maxLength={30}
+                    setfocus={setpasswordfocus}
                 />
             </View>
             <View style={styles.des}></View>
