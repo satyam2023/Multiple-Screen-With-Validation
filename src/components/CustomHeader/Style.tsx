@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
         height: 5,
         width: 70,
         marginTop: 38,
-    }
+    },
+    
 });
 export default styles;

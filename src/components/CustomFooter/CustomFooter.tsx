@@ -51,13 +51,13 @@ const CustomFooter: React.FC<FooterProps> = ({ setScreen, currentScreen, callCus
                         }
                     }
                 }>
-                    <Text style={{ color: '#FFFFFF', fontSize: 30, fontFamily: 'cursive' }}>BACK</Text>
+                    <Text style={{ color: '#FFFFFF', fontSize: 30 }}>BACK</Text>
                 </TouchableOpacity> :
                     <Text></Text>
                 }
 
                 <TouchableOpacity style={styles.probtn} onPress={handle}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 30, fontFamily: 'cursive' }}>PROCEED</Text>
+                    <Text style={{ color: '#FFFFFF', fontSize: 30}}>PROCEED</Text>
                 </TouchableOpacity>
             </View>
         </View>

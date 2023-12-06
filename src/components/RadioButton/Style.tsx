@@ -10,8 +10,8 @@ const styles=StyleSheet.create({
         width: 20,
         backgroundColor: "#F8F8F8",
         borderRadius: 10,
-        borderWidth: 1,
-        borderColor: "#E6E6E6",
+        borderWidth: 2,
+        borderColor: " rgba(87, 133, 255, 1)",
         alignItems: "center",
         justifyContent: "center"
       },
@@ -19,7 +19,7 @@ const styles=StyleSheet.create({
         height: 14,
         width: 14,
         borderRadius: 7,
-        backgroundColor: "#98CFB6",
+        backgroundColor: "#00BFFF",
       },
       emptyradioButtonIcon: {
         height: 14,

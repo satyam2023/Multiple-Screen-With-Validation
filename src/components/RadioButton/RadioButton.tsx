@@ -1,27 +1,14 @@
 import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
   useState,
 } from 'react';
-import { StatusBar } from 'react-native';
-import type { PropsWithChildren } from 'react';
-import { StatusBarStyle } from 'react-native';
-
 import {
-  Alert,
-  SafeAreaView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import styles from './Style';
 interface RadioProps {
-
-
 }
-
 const RadioButton = ({ }: RadioProps) => {
   const [radiobutton, setradiobutton] = useState<boolean>(true);
   return (
@@ -48,7 +35,4 @@ const RadioButton = ({ }: RadioProps) => {
     </View>
   );
 };
-
-
-
 export default RadioButton;

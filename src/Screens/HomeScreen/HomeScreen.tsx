@@ -12,13 +12,22 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from './Style';
 import { RootStackParamList } from '../../../App'
+import Appopening from '../../components/AppOpening/AppOpening';
 
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen: React.FC<HomeScreenProps> = (props) => {
+    const [splash,setsplash]=useState(true)
+    console.log("Props:",props);
+    console.log("Props of navigation:",props.navigation);
     function handleclick() {
-        props.navigation.push("SignUp");
+props.navigation.push("SignUp");
+    }
+    function fortiming(time: number) {
+        setTimeout(() => {
+           setsplash(false)
+        }, time);
     }
 
     return (
@@ -26,7 +35,10 @@ const HomeScreen: React.FC<HomeScreenProps> = (props) => {
             <StatusBar
                 backgroundColor='#324AB2'
             />
-            <View>
+            { splash && <Appopening fortiming={fortiming} />}
+
+            {!splash &&  <View>
+
 
                 <View style={[styles.design]}>
                     <Text style={{ fontFamily: 'cursive', fontSize: 70, color: '#FFFFFF', fontWeight: 'bold', marginTop: 25, }}>Welcome
@@ -42,7 +54,8 @@ const HomeScreen: React.FC<HomeScreenProps> = (props) => {
                         <Text style={{ fontSize: 30, fontFamily: 'cursive', fontWeight: 'bold' }}>Log In</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+               
+            </View>}
             <View style={styles.des}></View>
             <View style={styles.des1}></View>
             <View style={styles.des2}></View>

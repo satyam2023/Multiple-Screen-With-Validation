@@ -4,6 +4,7 @@ import {
     View,
     StatusBar,
 } from 'react-native';
+import styles from './Style';
 
 interface AppopeningProps {
     fortiming: Function;
@@ -11,9 +12,15 @@ interface AppopeningProps {
 const Appopening: React.FC<AppopeningProps> = ({ fortiming }: AppopeningProps) => {
     return (
         <View style={{ width: '110%', height: '200%', backgroundColor: '#FFFFFF', }}>
-            <StatusBar backgroundColor='#E6E6E6' />
+            <StatusBar backgroundColor='#FFFFFF' />
             <Text style={{ color: 'red', textAlign: 'center', fontSize: 50, marginTop: 275, marginRight: 50, }}>Welcome!!!</Text>
-            {fortiming(0)}
+            {fortiming(2000)}
+            <View style={styles.des}></View>
+            <View style={styles.des1}></View>
+            <View style={styles.des2}></View>
+            <View style={styles.des4}></View>
+            <View style={styles.des5}></View>
+            <View style={styles.des6}></View>
         </View>
     );
 }

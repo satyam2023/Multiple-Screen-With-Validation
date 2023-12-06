@@ -42,9 +42,7 @@ const styles = StyleSheet.create({
       },
       shadowOpacity: 0.1,
       shadowRadius: 16.00,
-      
       elevation: 25,
-  
       borderRadius: 15,
       backgroundColor: '#00BFFF',
     },
