@@ -43,7 +43,10 @@ const userSlice = createSlice({
     },
     setSignUp:(state,action)=>{
       console.log("signup status:",action.payload)
-       state.userdata.push(action.payload) },
+     
+       state.userdata.push(action.payload) 
+       console.log("first user:",state.userdata.size())
+      },
        setLogIn:(state,action)=>{
          
        state.userdata.some(item=>{

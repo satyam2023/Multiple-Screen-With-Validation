@@ -11,15 +11,19 @@ import {
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from './Style';
-import { RootStackParamList } from '../../../App'
+import { RootStackParamList } from '../../Views/MainScreen/MainScreen';
 import Appopening from '../../components/AppOpening/AppOpening';
 
 
-type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home","Login">;
 
 const HomeScreen: React.FC<HomeScreenProps> = (props) => {
     const [splash,setsplash]=useState(true)
-    function handleclick() {
+    function handleclicklogin() {
+        props.navigation.push("Login");
+            }
+            
+    function handleclicksignup() {
 props.navigation.push("SignUp");
     }
     function fortiming(time: number) {
@@ -44,11 +48,11 @@ props.navigation.push("SignUp");
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 300, }}>
                     <TouchableOpacity style={styles.btn} onPress={() => {
-                        handleclick()
+                        handleclicksignup()
                     }}>
                         <Text style={{ fontSize: 30, fontFamily: 'cursive', fontWeight: 'bold' }}>Sign Up</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={handleclicklogin}>
                         <Text style={{ fontSize: 30, fontFamily: 'cursive', fontWeight: 'bold' }}>Log In</Text>
                     </TouchableOpacity>
                 </View>
