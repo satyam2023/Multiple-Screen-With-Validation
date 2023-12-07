@@ -42,8 +42,9 @@ const userSlice = createSlice({
       state.phonenumber = action.payload;
     },
     setSignUp:(state,action)=>{
+      console.log("signup status:",action.payload)
        state.userdata.push(action.payload) },
-    setLogIn:(state,action)=>{
+       setLogIn:(state,action)=>{
          
        state.userdata.some(item=>{
         console.log(item.userName);

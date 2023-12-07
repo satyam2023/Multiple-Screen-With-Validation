@@ -1,6 +1,8 @@
 
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import type { PropsWithChildren } from 'react';
+import { setSignUp } from '../../Redux/Slice';
+import { useSelector} from 'react-redux';
 
 import {
     Alert,
@@ -25,6 +27,16 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
     const [focus,setfocus]=useState(false)
     const [passwordfocus,setpasswordfocus]=useState(false)
     const dispatch=useDispatch();
+    const NAME = useSelector((state:any) =>  state.user.userName);
+    const PASSWORD = useSelector((state:any) => state.user.password);
+    const PHONENUMBER = useSelector((state:any) => state.user.phonenumber);
+    const EMAIL = useSelector((state:any) => state.user.email);
+    const GENDER =useSelector((state:any)=>state.user.gender);
+    console.log("Second name:",NAME)
+    console.log("Second password:",PASSWORD)
+    console.log("Second phonenumber:",PHONENUMBER)
+    console.log("Second Eail:",EMAIL)
+    console.log("Second GENDER:",GENDER)
     const details = {
         password: useRef(""),
         confirmpassword: useRef(""),
@@ -61,7 +73,16 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
             setvalidpassword(false);
             errorVisiblePassword();
         }
-        
+        else{
+            console.log("enterd inside else")
+            dispatch(setSignUp({
+                userName: NAME,
+                gender:GENDER,
+                phonenumber:PHONENUMBER,
+                email:EMAIL,
+                password: PASSWORD,
+              }))
+        }
     }
     useImperativeHandle(ref, () => ({
         handleSubmit: handlepass,

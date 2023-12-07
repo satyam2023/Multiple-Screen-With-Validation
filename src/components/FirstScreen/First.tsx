@@ -102,7 +102,7 @@ const First = forwardRef(({ CheckScreen }: FirstProps, ref) => {
             errorVisiblePhone();
         }
         else{
-            dispatch(setEmail(details.phoneNumber.current))
+            dispatch(setPhone(details.phoneNumber.current))
 
         }
     }

@@ -194,7 +194,6 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
                     />
                 </View>
                 {errorVisibleName()}
-
                 <View>
                     <TouchableOpacity style={styles.searchbox} onPress={() => {
                         if (toggle) { settoggle(false) }
@@ -211,6 +210,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
                     </TouchableOpacity>
 
                 </View>
+                
                 {(Tag == "Gender" && dropvisi) ? <View>
                     <Text style={{ fontSize: 14, color: 'red', marginRight: 180 }}>
                         !!! Please Select
