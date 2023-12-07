@@ -5,6 +5,8 @@ import React, {
     useState,
 } from 'react';
 import styles from './Style';
+import { useDispatch } from 'react-redux';
+import { setPhone,setEmail } from '../../Redux/Slice';
 
 import {
     Alert,
@@ -28,6 +30,7 @@ const First = forwardRef(({ CheckScreen }: FirstProps, ref) => {
     const [phonestatus, setphonestatus] = useState(false);
     const [focus, setfocus] = useState(false)
     const [phonefocus, setphonefocus] = useState(false)
+    const dispatch =useDispatch();
     const details = {
         email: useRef(''),
         phoneNumber: useRef(''),
@@ -90,10 +93,17 @@ const First = forwardRef(({ CheckScreen }: FirstProps, ref) => {
             errorVisibleEmail();
             setvalidemail(false);
         }
+        else {
+            dispatch(setEmail(details.email.current))
+        }
 
         if (phonelength == 0) {
             setvalidphone(false);
             errorVisiblePhone();
+        }
+        else{
+            dispatch(setEmail(details.phoneNumber.current))
+
         }
     }
 

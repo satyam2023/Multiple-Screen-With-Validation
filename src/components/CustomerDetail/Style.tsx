@@ -78,13 +78,9 @@ import { StyleSheet } from "react-native";
       
     },
     boxfocus:{
-      zIndex:3,
-      position:'relative',
-      bottom:10,
       flexDirection: 'row',
       borderRadius: 15,
-      borderColor: '#0000FF',
-      left:10,
+      borderColor: '#91A3B0',
       borderTopWidth:0.5,
       borderLeftWidth:2,
       borderRightWidth:4,

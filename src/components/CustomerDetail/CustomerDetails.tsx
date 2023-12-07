@@ -5,8 +5,9 @@ import React, {
     useState,
 } from 'react';
 import type { PropsWithChildren } from 'react';
+import { setUserName,setGender } from '../../Redux/Slice';
 import styles from './Style';
-
+import { useDispatch,useSelector } from 'react-redux';
 
 import {
     Alert,
@@ -35,6 +36,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
     const [dropstatus, setdropstatus] = useState<boolean>(false);
     const [dropvisi, setdropvisi] = useState<boolean>(false);
     const [focus,setfocus]=useState(false)
+    const dispatch = useDispatch();
     const details = {
         fullname: useRef(''),
     };
@@ -98,6 +100,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
 
         }
         else {
+            dispatch(setGender(Tag))
             setdropstatus(true);
         }
 
@@ -106,6 +109,7 @@ const CustomerDetails = forwardRef(({ CheckScreen }: CustomerProps, ref) => {
 
 
     function errorVisible() {
+        dispatch(setUserName(details.fullname))
         errorVisibleNaam()
         errorVisibledrop()
         setdropvisi(true)

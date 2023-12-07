@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import InputText from '../InputLayout/InputText';
 import styles from './Style';
+import { useDispatch } from 'react-redux';
+import { setPassword } from '../../Redux/Slice';
 
 //import DropdownList from './DropDownList';
 interface SecondProps {
@@ -22,6 +24,7 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
     const [validpassword, setvalidpassword] = useState(true);
     const [focus,setfocus]=useState(false)
     const [passwordfocus,setpasswordfocus]=useState(false)
+    const dispatch=useDispatch();
     const details = {
         password: useRef(""),
         confirmpassword: useRef(""),
@@ -42,7 +45,13 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
         } else if (details.password.current !== details.confirmpassword.current) {
             setvalidpassword(false);
             CheckScreen(false)
-        } else {
+        }
+        else if(details.password.current === details.confirmpassword.current){
+            dispatch(setPassword(details.password.current))
+            setvalidpassword(true);
+            CheckScreen(true);
+        }
+        else {
             setvalidpassword(true);
             CheckScreen(true);
         }
@@ -52,7 +61,7 @@ const Second = forwardRef(({ CheckScreen }: SecondProps, ref) => {
             setvalidpassword(false);
             errorVisiblePassword();
         }
-
+        
     }
     useImperativeHandle(ref, () => ({
         handleSubmit: handlepass,
