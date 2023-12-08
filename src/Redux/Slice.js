@@ -45,15 +45,24 @@ const userSlice = createSlice({
       console.log("signup status:",action.payload)
      
        state.userdata.push(action.payload) 
-       console.log("first user:",state.userdata.size())
+       console.log("first user:",state.userdata)
       },
        setLogIn:(state,action)=>{
+       
          
        state.userdata.some(item=>{
-        console.log(item.userName);
-        if((item.userName===action.payload.userName)  && (item.password===action.payload.password)){
-          console.log("true");
+        console.log("intial or previous name:",item.userName);
+        console.log("Reduc Login data  action received username:",action.payload.userName);
+        console.log("Reduc Login data action reciewved password:",action.payload.password);
+        console.log("intial or previous password :",item.password)
+        
+        console.log("action payload of ")
+        if((item.userName==action.payload.userName)  && (item.password==action.payload.password)){
+          console.log("enter data match with registered user");
           state.isLog=true;
+        }
+       else{
+          state.isLog=false;
         }
 
        })
@@ -66,7 +75,7 @@ const userSlice = createSlice({
 export const {setUserName,setPassword,setSignUp,setLogIn,setEmail,setGender,setPhone } = userSlice.actions;
 export const selectUserName = (state) => state.user.userName;
 
-export const isLog = () => ( state.user.isLog)
+export const isLog = (state) =>  state.user.isLog;
 //export const insaan = (state) => state.user.insaan;
 
 export default userSlice.reducer;

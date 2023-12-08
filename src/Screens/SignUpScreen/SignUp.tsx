@@ -13,6 +13,7 @@ import Second from '../../components/SecondScreen/Second';
 import Appopening from '../../components/AppOpening/AppOpening';
 import NotchScreen from '../../components/NotchScreen/NotchScreen';
 import styles from './Style';
+import SignUpLastScreen from '../../components/SignUpLast/SignUpLastScreen';
 
 const SignUp: React.FC = () => {
     const [currentScreen, setCurrentScreen] = useState(1);
@@ -79,6 +80,8 @@ const SignUp: React.FC = () => {
                         ref={FirstRef} />}
                     {currentScreen == 3 && <Second CheckScreen={CheckScreen}
                         ref={SecondRef} />}
+                       
+
                 </ScrollView>
                 <CustomFooter setScreen={setScreen} currentScreen={currentScreen} callCustomerDetailsSubmit={callCustomerDetailsSubmit} one={one} CheckScreen={CheckScreen}
                     callFirstSubmit={callFirstSubmit} callSecondSubmit={callSecondSubmit} />

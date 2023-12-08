@@ -3,6 +3,7 @@ import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import type { PropsWithChildren } from 'react';
 import { setSignUp } from '../../Redux/Slice';
 import { useSelector} from 'react-redux';
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import {
     Alert,

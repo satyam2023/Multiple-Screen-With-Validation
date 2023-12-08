@@ -8,7 +8,6 @@ import {
     TouchableOpacity,
     StatusBar
 } from 'react-native';
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from './Style';
 import { RootStackParamList } from '../../Views/MainScreen/MainScreen';
